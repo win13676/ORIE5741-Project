@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 500px;
+            height: 500px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "MinTemp", "label": "MinTemp", "shape": "dot"}, {"id": "MaxTemp", "label": "MaxTemp", "shape": "dot"}, {"id": "Rainfall", "label": "Rainfall", "shape": "dot"}, {"id": "Evaporation", "label": "Evaporation", "shape": "dot"}, {"id": "Sunshine", "label": "Sunshine", "shape": "dot"}, {"id": "WindGustSpeed", "label": "WindGustSpeed", "shape": "dot"}, {"id": "WindSpeed9am", "label": "WindSpeed9am", "shape": "dot"}, {"id": "WindSpeed3pm", "label": "WindSpeed3pm", "shape": "dot"}, {"id": "Humidity9am", "label": "Humidity9am", "shape": "dot"}, {"id": "Humidity3pm", "label": "Humidity3pm", "shape": "dot"}, {"id": "Pressure9am", "label": "Pressure9am", "shape": "dot"}, {"id": "Pressure3pm", "label": "Pressure3pm", "shape": "dot"}, {"id": "Cloud9am", "label": "Cloud9am", "shape": "dot"}, {"id": "Cloud3pm", "label": "Cloud3pm", "shape": "dot"}, {"id": "Temp9am", "label": "Temp9am", "shape": "dot"}, {"id": "Temp3pm", "label": "Temp3pm", "shape": "dot"}, {"id": "RainToday", "label": "RainToday", "shape": "dot"}, {"id": "WindGustDir_N", "label": "WindGustDir_N", "shape": "dot"}, {"id": "WindGustDir_S", "label": "WindGustDir_S", "shape": "dot"}, {"id": "WindGustDir_E", "label": "WindGustDir_E", "shape": "dot"}, {"id": "WindGustDir_W", "label": "WindGustDir_W", "shape": "dot"}, {"id": "WindDir9am_N", "label": "WindDir9am_N", "shape": "dot"}, {"id": "WindDir9am_S", "label": "WindDir9am_S", "shape": "dot"}, {"id": "WindDir9am_E", "label": "WindDir9am_E", "shape": "dot"}, {"id": "WindDir9am_W", "label": "WindDir9am_W", "shape": "dot"}, {"id": "WindDir3pm_N", "label": "WindDir3pm_N", "shape": "dot"}, {"id": "WindDir3pm_S", "label": "WindDir3pm_S", "shape": "dot"}, {"id": "WindDir3pm_E", "label": "WindDir3pm_E", "shape": "dot"}, {"id": "WindDir3pm_W", "label": "WindDir3pm_W", "shape": "dot"}]);
+        edges = new vis.DataSet([{"from": "MaxTemp", "to": "MinTemp"}, {"from": "MinTemp", "to": "Temp9am"}, {"from": "MinTemp", "to": "Temp3pm"}, {"from": "Humidity9am", "to": "MaxTemp"}, {"from": "Humidity3pm", "to": "MaxTemp"}, {"from": "MaxTemp", "to": "Temp9am"}, {"from": "MaxTemp", "to": "Temp3pm"}, {"from": "RainToday", "to": "Rainfall"}, {"from": "Cloud9am", "to": "Sunshine"}, {"from": "Cloud3pm", "to": "Sunshine"}, {"from": "WindGustSpeed", "to": "WindSpeed9am"}, {"from": "WindGustSpeed", "to": "WindSpeed3pm"}, {"from": "WindSpeed3pm", "to": "WindSpeed9am"}, {"from": "Humidity3pm", "to": "Humidity9am"}, {"from": "Humidity9am", "to": "Temp3pm"}, {"from": "Humidity3pm", "to": "Temp3pm"}, {"from": "Pressure3pm", "to": "Pressure9am"}, {"from": "Cloud3pm", "to": "Cloud9am"}, {"from": "Temp3pm", "to": "Temp9am"}, {"from": "WindGustDir_N", "to": "WindGustDir_S"}, {"from": "WindDir3pm_N", "to": "WindGustDir_N"}, {"from": "WindDir3pm_S", "to": "WindGustDir_S"}, {"from": "WindGustDir_E", "to": "WindGustDir_W"}, {"from": "WindDir3pm_E", "to": "WindGustDir_E"}, {"from": "WindDir3pm_W", "to": "WindGustDir_W"}, {"from": "WindDir9am_N", "to": "WindDir9am_S"}, {"from": "WindDir9am_E", "to": "WindDir9am_W"}, {"from": "WindDir3pm_N", "to": "WindDir3pm_S"}, {"from": "WindDir3pm_E", "to": "WindDir3pm_W"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
