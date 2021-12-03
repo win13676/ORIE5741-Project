@@ -3,4 +3,4 @@
 Optimizing Machine Learning Model Memory Usage With Minimal Statistical Performance Degradation and Maximal Interoperability
 Eliot Shekhtman, Pakin Wirojwatanakul, Saharat Rodjanamongkol
 
-https://youtu.be/-NpJZaXlTxc
+Presentation video link: https://youtu.be/-NpJZaXlTxc
